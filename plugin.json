@@ -1,0 +1,7 @@
+{
+    "name": "AniWorld Downloader",
+    "description": "Displays current download status from Jellyfin/AniWorld.",
+    "version": "1.0.0",
+    "author": "Tim",
+    "entry": "plugin.py"
+}
