@@ -1,7 +1,44 @@
 {
     "name": "AniWorld Downloader",
-    "description": "Displays current download status from Jellyfin/AniWorld.",
+    "description": "Displays current download status from AniWorld Downloader.",
     "version": "1.0.0",
     "author": "Tim",
-    "entry": "plugin.py"
+    "entry": "plugin.py",
+    "settings_schema": [
+        {
+            "type": "header",
+            "label": "API Configuration"
+        },
+        {
+            "name": "base_url",
+            "label": "Base URL",
+            "type": "text",
+            "default": "http://localhost:8080",
+            "info": "The URL of your AniWorld Downloader instance"
+        },
+        {
+            "name": "username",
+            "label": "Username",
+            "type": "text",
+            "default": "admin",
+            "info": "Your AniWorld Downloader username"
+        },
+        {
+            "name": "password",
+            "label": "Password",
+            "type": "password",
+            "info": "Your AniWorld Downloader password"
+        },
+        {
+            "type": "header",
+            "label": "Plugin Options"
+        },
+        {
+            "name": "update_interval",
+            "label": "Update Interval (seconds)",
+            "type": "number",
+            "default": 3,
+            "info": "Time in seconds between updates"
+        }
+    ]
 }

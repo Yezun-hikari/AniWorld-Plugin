@@ -9,10 +9,10 @@ logger = logging.getLogger(__name__)
 
 class AniWorldPlugin(PixooPluginBase):
     def setup(self):
-        self.base_url = os.getenv("BASE_URL", "http://jellyfin:8080")
-        self.user = os.getenv("USER", "admin")
-        self.password = os.getenv("PASSWORD", "sfYg452pmZ*KWGuqVDUJ")
-        self.update_interval = int(os.getenv("UPDATE_INTERVAL", 3))
+        self.base_url = self.config.get("base_url", "http://jellyfin:8080")
+        self.user = self.config.get("username", "admin")
+        self.password = self.config.get("password", "sfYg452pmZ*KWGuqVDUJ")
+        self.update_interval = int(self.config.get("update_interval", 3))
         
         self.session = requests.Session()
         
