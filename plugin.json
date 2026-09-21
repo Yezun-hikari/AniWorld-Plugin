@@ -1,7 +1,7 @@
 {
     "name": "AniWorld Downloader",
     "description": "Displays current download status from AniWorld Downloader.",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "Tim",
     "entry": "plugin.py",
     "settings_schema": [
@@ -17,17 +17,10 @@
             "info": "The URL of your AniWorld Downloader instance"
         },
         {
-            "name": "username",
-            "label": "Username",
-            "type": "text",
-            "default": "admin",
-            "info": "Your AniWorld Downloader username"
-        },
-        {
-            "name": "password",
-            "label": "Password",
+            "name": "api_key",
+            "label": "API Key",
             "type": "password",
-            "info": "Your AniWorld Downloader password"
+            "info": "Your AniWorld Downloader API key"
         },
         {
             "type": "header",

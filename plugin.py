@@ -10,11 +10,12 @@ logger = logging.getLogger(__name__)
 class AniWorldPlugin(PixooPluginBase):
     def setup(self):
         self.base_url = self.config.get("base_url", "http://jellyfin:8080")
-        self.user = self.config.get("username", "admin")
-        self.password = self.config.get("password", "sfYg452pmZ*KWGuqVDUJ")
+        self.api_key = self.config.get("api_key", "")
         self.update_interval = int(self.config.get("update_interval", 3))
         
         self.session = requests.Session()
+        if self.api_key:
+            self.session.headers.update({"X-API-Key": self.api_key})
         
         self.last_drawn_state = None
         self.real_download_confirmed = False
@@ -24,28 +25,13 @@ class AniWorldPlugin(PixooPluginBase):
         
         # Simulated Pixoo for rendering
         self.pixoo = self.get_pixoo_instance()
-        
-    def perform_login(self):
-        try:
-            response = self.session.get(f"{self.base_url}/login", timeout=5)
-            token_match = re.search(r'name="csrf_token" value="([^"]+)"', response.text)
-            if not token_match: return False
-
-            csrf_token = token_match.group(1)
-            login_data = {"csrf_token": csrf_token, "username": self.user, "password": self.password}
-            res = self.session.post(f"{self.base_url}/login", data=login_data, timeout=5)
-            return res.status_code == 200 or "dashboard" in res.url
-        except Exception as e:
-            logger.error(f"Login fehlgeschlagen: {e}")
-            return False
 
     def get_downloader_data(self):
         try:
             response = self.session.get(f"{self.base_url}/api/queue", timeout=5)
             if response.status_code == 401:
-                if self.perform_login():
-                    response = self.session.get(f"{self.base_url}/api/queue", timeout=5)
-                else: return None
+                logger.error("API Key ist ungültig oder fehlt.")
+                return None
             return response.json() if response.status_code == 200 else None
         except Exception as e:
             logger.error(f"Fehler beim Abrufen der Downloader-Daten: {e}")
